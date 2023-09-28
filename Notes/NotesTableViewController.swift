@@ -18,13 +18,6 @@ class NotesTableViewController: UITableViewController {
     
     var notes: [Note] = []
     
-    var currentFontRGBAColor = [CGFloat(128.0/255), CGFloat(128.0/255), CGFloat(128.0/255), CGFloat(1.0)]
-    var currentFontFamily = UIFont.familyNames.first
-    var currentFontFamilyRow = 0
-    var currentFontSize = 17.0
-    
-    let fontDataFamily = UIFont.familyNames.prefix(20)
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,8 +57,8 @@ class NotesTableViewController: UITableViewController {
         cell.titleLabel.text = notes[indexPath.row].title
         cell.dateLabel.text = notes[indexPath.row].date.iso8601String
         
-        cell.titleLabel.font = UIFont(name: notes[indexPath.row].fontFamily, size: 17.0)
-        cell.dateLabel.font = UIFont(name: notes[indexPath.row].fontFamily, size: 17.0)
+        cell.titleLabel.font = UIFont(name: notes[indexPath.row].fontFamily, size: appConstants.defaultFontSize)
+        cell.dateLabel.font = UIFont(name: notes[indexPath.row].fontFamily, size: appConstants.defaultFontSize)
         
         cell.titleLabel.textColor = UIColor(red: notes[indexPath.row].textColor[0],
                                             green: notes[indexPath.row].textColor[1],
@@ -88,15 +81,6 @@ class NotesTableViewController: UITableViewController {
         index = indexPath.row
         performSegue(withIdentifier: "editTaskSegue", sender: self)
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -141,7 +125,7 @@ class NotesTableViewController: UITableViewController {
     }
     
     @IBAction func unWindFromAddNoteViewController(segue: UIStoryboardSegue){
-        print("Unwind segue")
+        //print("Unwind segue")
         let source = segue.source as! AddNoteViewController
         note = source.newNote
         index = source.noteIndex
@@ -150,8 +134,8 @@ class NotesTableViewController: UITableViewController {
             noteManager.updateNote(note: note!, index: index!)
         }else{ //Creating note
             noteManager.createNote(note: note!)
-            print("#", noteManager.countNotes())
-            print("", noteManager.getNotes())
+            //print("#", noteManager.countNotes())
+            //print("", noteManager.getNotes())
         }
         
         //Saving and reloading data

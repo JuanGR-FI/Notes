@@ -28,7 +28,7 @@ extension AddNoteViewController : UIPickerViewDelegate{
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("Selected row:", row)
+        //print("Selected row:", row)
         currentFontFamily = fontDataFamily[row]
         currentFontFamilyRow = row
         noteTitle.font = UIFont(name: currentFontFamily!, size: currentFontSize)

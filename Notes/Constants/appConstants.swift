@@ -9,4 +9,5 @@ import Foundation
 
 struct appConstants{
     static let fontFamilyControlComponents = 1
+    static let defaultFontSize = 17.0
 }
