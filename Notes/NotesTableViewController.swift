@@ -17,6 +17,13 @@ class NotesTableViewController: UITableViewController {
     var index: Int? = nil
     
     var notes: [Note] = []
+    
+    var currentFontRGBAColor = [CGFloat(128.0/255), CGFloat(128.0/255), CGFloat(128.0/255), CGFloat(1.0)]
+    var currentFontFamily = UIFont.familyNames.first
+    var currentFontFamilyRow = 0
+    var currentFontSize = 17.0
+    
+    let fontDataFamily = UIFont.familyNames.prefix(20)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +64,19 @@ class NotesTableViewController: UITableViewController {
         cell.titleLabel.text = notes[indexPath.row].title
         cell.dateLabel.text = notes[indexPath.row].date.iso8601String
         
+        cell.titleLabel.font = UIFont(name: notes[indexPath.row].fontFamily, size: 17.0)
+        cell.dateLabel.font = UIFont(name: notes[indexPath.row].fontFamily, size: 17.0)
+        
+        cell.titleLabel.textColor = UIColor(red: notes[indexPath.row].textColor[0],
+                                            green: notes[indexPath.row].textColor[1],
+                                            blue: notes[indexPath.row].textColor[2],
+                                            alpha: notes[indexPath.row].textColor[3])
+        
+        cell.dateLabel.textColor = UIColor(red: notes[indexPath.row].textColor[0],
+                                            green: notes[indexPath.row].textColor[1],
+                                            blue: notes[indexPath.row].textColor[2],
+                                            alpha: notes[indexPath.row].textColor[3])
+        
 
         // Configure the cell...
 
@@ -84,7 +104,7 @@ class NotesTableViewController: UITableViewController {
             // Delete the row from the data source
             noteManager.deleteNote(index: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            reloadUI()
+            saveChanges()
         }
     }
     
@@ -135,10 +155,15 @@ class NotesTableViewController: UITableViewController {
         }
         
         //Saving and reloading data
+        saveChanges()
+        
+    }
+    
+    func saveChanges() {
         noteManager.saveNotes()
         notes = noteManager.getNotes()
-        tableViewNotes.reloadData()
         reloadUI()
+        tableViewNotes.reloadData()
     }
 
 }
